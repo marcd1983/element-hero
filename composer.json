@@ -1,0 +1,27 @@
+{
+    "name": "antlion/element-hero",
+    "description": "Elemental module for Hero blocks",
+    "license": "BSD-3-Clause",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "elemental",
+        "blocks",
+        "hero"
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Antlion\\ElementHero\\": "src/"
+        }
+    },
+    "config": {
+        "process-timeout": 600
+    },
+    "extra": {
+        "expose": [
+            "client"
+        ]
+    }
+}

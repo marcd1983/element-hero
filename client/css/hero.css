@@ -1,0 +1,52 @@
+
+.hero-section {
+  position: relative;
+  display: grid;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #111;
+  isolation: isolate;
+  background-color: #f7f7f7;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay-bg, #000);
+  opacity: var(--hero-overlay, .35);
+  z-index: 0;
+}
+
+.hero-inner{
+  position: relative;
+  z-index: 1;
+}
+
+.hero-dark {
+  --hero-overlay-bg: #000;
+  --hero-overlay: .45;
+  color: #fff;
+}
+
+.hero-light {
+  --hero-overlay-bg: #fff;
+  --hero-overlay: .25;
+  color: #111;
+}
+
+/* HEIGHT MODIFIERS */
+.hero-h-auto   { min-height: auto; }
+.hero-h-short  { min-height: 30vh; }
+.hero-h-medium { min-height: 50vh; }
+.hero-h-tall   { min-height: 70vh; }
+.hero-h-full   { min-height: 100vh; }
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .hero-h-short  { min-height: 40vh; }
+  .hero-h-medium { min-height: 60vh; }
+  .hero-h-tall   { min-height: 80vh; }
+}
+
