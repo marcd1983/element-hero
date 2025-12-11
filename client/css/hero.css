@@ -9,6 +9,7 @@
   color: #111;
   isolation: isolate;
   background-color: #f7f7f7;
+  width: 100% ;
 }
 
 .hero-overlay {
