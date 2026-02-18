@@ -13,19 +13,19 @@ use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\LinkField\Models\Link;
 use SilverStripe\LinkField\Form\MultiLinkField;
 use SilverStripe\Forms\FieldGroup;
+use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 
 class ElementHero extends BaseElement
 {
     private static array $db = [
-        'Title' => 'Varchar(255)',     // Headline
-        'Subtitle' => 'Varchar(255)',     // Subheadline
-        'Theme' => 'Enum("light,dark","dark")',
-        'Height' => 'Enum("auto,short,medium,tall,full","tall")',
-        'HorizontalAlign' => 'Enum("center,left,right","center")',
-        'VerticalAlign' => "Enum('top,middle,bottom','middle')",
-        'Padding' => "Enum('none,20px,40px,60px','none')",
-        'OverlayOpacity' => 'Int',              // 0–100
-        'Content' => 'Text',             // optional small blurb
+        'Title'          => 'Varchar(255)',     // Headline
+        'Content'        => 'HTMLText',
+        'Theme'          => 'Enum("light,dark","dark")',
+        'OverlayOpacity' => 'Int',
+        'Height'         => 'Enum("auto,short,medium,tall,full","tall")',
+        'VerticalAlign'  => 'Enum("top,middle,bottom","middle")',
+        'HorizontalAlign'=> 'Enum("left,center,right","left")',
+        'Padding'        => 'Enum("none,20px,40px,60px","none")',
     ];
 
     private static array $has_one = [
@@ -33,13 +33,15 @@ class ElementHero extends BaseElement
     ];
 
     private static array $has_many = [
-       'Links' => Link::class . '.Owner',
+        'Links' => Link::class . '.Owner',
     ];
 
     private static array $defaults = [
-        'HorizontalAlign' => 'center',
-        'VerticalAlign' => 'middle',
-        'Padding' => '20px',
+        'VerticalAlign'   => 'middle',
+        'HorizontalAlign' => 'left',
+        'Padding'         => '20px',
+        'Theme'           => 'dark',
+        'Height'          => 'tall',
     ];
 
     private static array $owns = [
@@ -47,7 +49,7 @@ class ElementHero extends BaseElement
         'Links',
     ];
 
-    private static string $icon = 'font-icon-block-banner';
+    private static string $icon       = 'font-icon-block-banner';
     private static string $table_name = 'ElementHero';
 
     public function getType(): string
@@ -59,58 +61,65 @@ class ElementHero extends BaseElement
     {
         $fields = parent::getCMSFields();
 
-        $fields->removeByName(['Theme', 'Height', 'HorizontalAlign', 'VerticalAlign', 'Padding', 'OverlayOpacity', 'Links']);
+        $fields->removeByName([
+            'Theme',
+            'Height',
+            'VerticalAlign',
+            'HorizontalAlign',
+            'Padding',
+            'OverlayOpacity',
+            'Links',
+        ]);
 
         $fields->addFieldsToTab('Root.Main', [
             TextField::create('Title', 'Headline'),
-            TextareaField::create('Subtitle', 'Sub Headline'),
-            TextareaField::create('Content', 'Optional blurb')->setRows(3),
+            HTMLEditorField::create('Content', 'Hero Content'),
             UploadField::create('BackgroundImage', 'Background image')
-                ->setFolderName('uploads/elements/hero slides')
+                ->setFolderName('uploads/elements/hero-slides')
                 ->setAllowedFileCategories('image/supported'),
-                
-            FieldGroup::create(
-            'Appearance', // group title (must be first arg)
-            DropdownField::create('Theme', 'Theme', [
-                'light' => 'Light',
-                'dark'  => 'Dark',
-            ]),
-            DropdownField::create('Height', 'Height', [
-                'auto'   => 'Auto',
-                'short'  => 'Short',
-                'medium' => 'Medium',
-                'tall'   => 'Tall',
-                'full'   => 'Full viewport',
-            ]),
-            DropdownField::create('HorizontalAlign', 'Horizontal Alignment', [
-                'center' => 'Center',
-                'left'   => 'Left',
-                'right'  => 'Right',
-            ]),
-            DropdownField::create('VerticalAlign', 'Vertical Alignment', [
-                'top'    => 'Top',
-                'middle' => 'Middle',
-                'bottom' => 'Bottom',
-            ]),
-            DropdownField::create('Padding', 'Padding', [
-                'none'   => 'None',
-                '20px'   => '20px',
-                '40px'   => '40px',
-                '60px'   => '60px',
-            ]),
-            NumericField::create('OverlayOpacity', 'Overlay opacity (0–100)')
-                ->setDescription('Typical: 0–70')
-            )
-            ->setName('AppearanceGroup')          // optional: stable name for CSS/JS
-            ->addExtraClass('stack'),            // optional: vertical stacked layout
 
-            MultiLinkField::create('Links', 'Button Links')
+            FieldGroup::create(
+                'Appearance',
+                DropdownField::create('Theme', 'Theme', [
+                    'light' => 'Light',
+                    'dark'  => 'Dark',
+                ]),
+                DropdownField::create('Height', 'Height', [
+                    'auto'   => 'Auto',
+                    'short'  => 'Short',
+                    'medium' => 'Medium',
+                    'tall'   => 'Tall',
+                    'full'   => 'Full viewport',
+                ]),
+                DropdownField::create('HorizontalAlign', 'Horizontal Alignment', [
+                    'left'   => 'Left',
+                    'center' => 'Center',
+                    'right'  => 'Right',
+                ]),
+                DropdownField::create('VerticalAlign', 'Vertical Alignment', [
+                    'top'    => 'Top',
+                    'middle' => 'Middle',
+                    'bottom' => 'Bottom',
+                ]),
+                DropdownField::create('Padding', 'Padding', [
+                    'none' => 'None',
+                    '20px' => '20px',
+                    '40px' => '40px',
+                    '60px' => '60px',
+                ]),
+                NumericField::create('OverlayOpacity', 'Overlay opacity (0–100)')
+                    ->setDescription('Typical: 0–70')
+            )
+                ->setName('AppearanceGroup')
+                ->addExtraClass('stack'),
+
+            MultiLinkField::create('Links', 'Button Links'),
         ]);
 
         return $fields;
     }
 
-    // Convenience for template
+    // 0–100 int -> 0–1 float string
     public function OverlayOpacityCss(): string
     {
         $pct = max(0, min(100, (int) $this->OverlayOpacity));
@@ -119,25 +128,27 @@ class ElementHero extends BaseElement
 
     public function HorizontalAlignClass(): string
     {
-        return match ($this->owner->HorizontalAlign) {
+        return match ($this->HorizontalAlign) {
             'center' => 'align-center text-center',
-            'left' => 'align-left text-left',
-            'right' => 'align-right text-right',
-            default => '',
+            'right'  => 'align-right text-right',
+            'left'   => 'align-left text-left',
+            default  => '',
         };
     }
+
     public function VerticalAlignClass(): string
     {
-        return match ($this->owner->VerticalAlign) {
-            'top' => 'align-self-top',     
+        return match ($this->VerticalAlign) {
+            'top'    => 'align-self-top',
             'middle' => 'align-self-middle',
             'bottom' => 'align-self-bottom',
-            default => '',
+            default  => '',
         };
     }
+
     public function PaddingClass(): string
     {
-        return match ($this->owner->Padding) {
+        return match ($this->Padding) {
             'none' => '',
             '20px' => 'p-20',
             '40px' => 'p-40',
