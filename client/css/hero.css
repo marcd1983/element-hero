@@ -10,6 +10,8 @@
   isolation: isolate;
   background-color: #f7f7f7;
   width: 100% ;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
 .hero-overlay {
@@ -23,6 +25,7 @@
 .hero-inner{
   position: relative;
   z-index: 1;
+  display: block;
 }
 
 .hero-dark {
