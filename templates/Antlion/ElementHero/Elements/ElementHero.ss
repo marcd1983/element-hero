@@ -1,11 +1,7 @@
 <%-- <% require themedCSS('hero') %> --%>
 <% require css('antlion/element-hero:client/css/hero.css') %>
-<div class="hero-section hero-{$Theme} hero-h-{$Height}" <% if $BackgroundImage %>style="background-image:url('{$BackgroundImage.URL}');"<% end_if %>>
-  <% if $OverlayOpacity %>
-    <div class="hero-overlay" style="--hero-overlay: {$OverlayOpacityCss};"></div>
-  <% else %>
-    <div class="hero-overlay"></div>
-  <% end_if %>
+<div class="hero-section hero-{$Theme} hero-h-{$Height}"<% if $HeroStyles %> style="{$HeroStyles}"<% end_if %>>
+  <div class="hero-overlay"<% if $OverlayOpacity %> style="--hero-overlay:{$OverlayOpacityCss};"<% end_if %>></div>
 
   <div class="hero-inner grid-x  {$HorizontalAlignClass} {$VerticalAlignClass}">
     <div class="cell large-shrink small-auto {$PaddingClass}">
