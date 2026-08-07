@@ -70,6 +70,8 @@ class ElementHero extends BaseElement
         $fields = parent::getCMSFields();
 
         $fields->removeByName([
+            'Title',
+            'Content',
             'Theme',
             'Height',
             'VerticalAlign',
