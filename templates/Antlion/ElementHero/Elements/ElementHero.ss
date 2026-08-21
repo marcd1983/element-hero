@@ -1,5 +1,6 @@
 <%-- <% require themedCSS('hero') %> --%>
 <% require css('antlion/element-hero:client/css/hero.css') %>
+<% cached $ID, $LastEdited, $Links.Count, $Links.Max('LastEdited') %>
 <div class="hero-section hero-{$Theme} hero-h-{$Height}"<% if $HeroStyles %> style="{$HeroStyles}"<% end_if %>>
   <div class="hero-overlay"<% if $OverlayOpacity %> style="--hero-overlay:{$OverlayOpacityCss};"<% end_if %>></div>
 
@@ -23,3 +24,4 @@
     </div>
   </div>
 </div>
+<% end_cached %>
