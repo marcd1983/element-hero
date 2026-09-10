@@ -1,5 +1,5 @@
 
-.hero-section {
+.hero-block {
   position: relative;
   display: grid;
   align-items: center;
@@ -10,7 +10,6 @@
   isolation: isolate;
   background-color: #f7f7f7;
   width: 100% ;
-  border-radius: 6px;
   overflow: hidden;
 }
 

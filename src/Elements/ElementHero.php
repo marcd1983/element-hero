@@ -69,9 +69,11 @@ class ElementHero extends BaseElement
     {
         $fields = parent::getCMSFields();
 
+        // BaseElementColumnWidthExtension adds this right after Title/Content;
+        // pull it out here so it can be placed at the end of the tab below.
+        $widthField = $fields->dataFieldByName('Width');
+
         $fields->removeByName([
-            'Title',
-            'Content',
             'Theme',
             'Height',
             'VerticalAlign',
@@ -82,11 +84,12 @@ class ElementHero extends BaseElement
             'OverlayColor',
             'OverlayOpacity',
             'Links',
+            'Width',
         ]);
 
         $fields->addFieldsToTab('Root.Main', [
-            TextField::create('Title', 'Headline'),
-            HTMLEditorField::create('Content', 'Hero Content'),
+
+            MultiLinkField::create('Links', 'Button Links'),
 
             ToggleCompositeField::create(
                 'HeroAppearance',
@@ -135,9 +138,15 @@ class ElementHero extends BaseElement
                         ->setDescription('e.g. 35 for 35% opacity'),
                 ]
             ),
-
-            MultiLinkField::create('Links', 'Button Links'),
         ]);
+
+        if ($widthField) {
+            $fields->addFieldToTab('Root.Main',
+                ToggleCompositeField::create('HeroColumnSettings', 'Column Settings', [
+                    $widthField,
+                ])
+            );
+        }
 
         return $fields;
     }
