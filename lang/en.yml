@@ -1,0 +1,19 @@
+en:
+  Antlion\ElementHero\Elements\ElementHero:
+    PLURALNAME: blocks
+    PLURALS:
+      one: 'A block'
+      other: '{count} blocks'
+    SINGULARNAME: block
+    db_BackgroundColor: 'Background color'
+    db_Content: Content
+    db_Height: Height
+    db_HorizontalAlign: 'Horizontal align'
+    db_OverlayColor: 'Overlay color'
+    db_OverlayOpacity: 'Overlay opacity'
+    db_Padding: Padding
+    db_Theme: Theme
+    db_Title: Title
+    db_VerticalAlign: 'Vertical align'
+    has_many_Links: Links
+    has_one_BackgroundImage: 'Background image'

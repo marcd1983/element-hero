@@ -195,7 +195,13 @@ class ElementHero extends BaseElement
             $parts[] = 'background-color:#' . ltrim((string)$this->BackgroundColor, '#');
         }
         if ($this->BackgroundImage()->exists()) {
-            $parts[] = "background-image:url('" . $this->BackgroundImage()->URL . "')";
+            $image = $this->BackgroundImage();
+            $parts[] = "background-image:url('" . $image->URL . "')";
+            $webp = $image->Convert('webp');
+            if ($webp) {
+                $parts[] = "background-image:image-set(url('" . $webp->URL . "') type('image/webp'), url('"
+                    . $image->URL . "') type('" . $image->getMimeType() . "'))";
+            }
         }
         if ($this->OverlayColor) {
             $parts[] = '--hero-overlay-bg:#' . ltrim((string)$this->OverlayColor, '#');
